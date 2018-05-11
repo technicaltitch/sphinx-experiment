@@ -26,6 +26,11 @@ More stuff
 .. automodule:: chris_pipeline.analysis
     :members:
 
+.. automodule:: example_module
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 * The :ref:`genindex`, :ref:`modindex` or the :doc:`detailed table of contents <contents>`.
 
