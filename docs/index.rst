@@ -12,7 +12,7 @@ Introduction
 
 .. rubric:: Everything you need to know about |ProjectName|.
 
-This documentation explains how analysis is performed for |ProjectName|.
+This documentation explains how analysis is performed for $ProjectName.
 
 Additional assistance is available from the following sources:
 
@@ -20,6 +20,12 @@ Additional assistance is available from the following sources:
 repo? (`pipelines/docs/project.rst` references `../../docs/index.rst`). Currently I'll run in project repo
 to simplify DAG generation bits. Can then revisit whether project `gitlab-ci.yml` needs its own Dockerfile
 and bash scripts or whether we can centralize in `pipelines` repo with parameters.
+
+More stuff
+
+.. automodule:: chris_pipeline.analysis
+    :members:
+
 
 * The :ref:`genindex`, :ref:`modindex` or the :doc:`detailed table of contents <contents>`.
 

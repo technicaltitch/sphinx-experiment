@@ -1,6 +1,8 @@
 chris_pipeline package
 ========================
 
+Some text
+
 Submodules
 ----------
 
