@@ -1,7 +1,4 @@
-.. sphinx-experiment documentation master file, created by
-   sphinx-quickstart on Mon May  7 00:58:55 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. This is a comment
 
 Welcome to sphinx-experiment's documentation!
 =============================================
@@ -10,6 +7,47 @@ Welcome to sphinx-experiment's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+Introduction
+============
+
+.. rubric:: Everything you need to know about |ProjectName|.
+
+This documentation explains how analysis is performed for |ProjectName|.
+
+Additional assistance is available from the following sources:
+
+* Link to `pipelines` repo Pages site from here? Or run all project docs from `pipelines`
+repo? (`pipelines/docs/project.rst` references `../../docs/index.rst`). Currently I'll run in project repo
+to simplify DAG generation bits. Can then revisit whether project `gitlab-ci.yml` needs its own Dockerfile
+and bash scripts or whether we can centralize in `pipelines` repo with parameters.
+
+* The :ref:`genindex`, :ref:`modindex` or the :doc:`detailed table of contents <contents>`.
+
+* The Helpdesk via email or Redmine.
+
+.. graphviz::
+
+   digraph foo {
+      "bar" -> "baz";
+   }
+
+.. graph:: foo
+
+   "bar" -- "baz";
+
+.. digraph:: foo
+
+   "bar" -> "baz" -> "quux";
+
+SVG permits URLs to be embedded in diagrams like so (click on the task node):
+
+.. graphviz::
+
+     digraph example {
+         a [label="chris_pipeline.analysis.AppendDataFrames", href="http://data-lab.pages.kimetrica.com/rm/chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
+         b [label="other"];
+         a -> b;
+     }
 
 
 Indices and tables
