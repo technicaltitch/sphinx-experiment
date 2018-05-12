@@ -26,7 +26,7 @@ More stuff
 .. automodule:: chris_pipeline.analysis
     :members:
 
-.. automodule:: example_module
+.. automodule:: chris_pipeline.analysis
     :members:
     :undoc-members:
     :show-inheritance:
@@ -57,7 +57,7 @@ SVG permits URLs to be embedded in diagrams like so (click on the task node):
 .. graphviz::
 
      digraph example {
-         a [label="chris_pipeline.analysis.AppendDataFrames", href="http://data-lab.pages.kimetrica.com/rm/chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
+         a [label="chris_pipeline.analysis.AppendDataFrames", href="chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
          b [label="other"];
          a -> b;
      }
