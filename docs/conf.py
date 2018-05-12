@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
-# sphinx-experiment documentation build configuration file, created by
-# sphinx-quickstart on Mon May  7 00:58:55 2018.
+import importlib.util
+import os
+import sys
+
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+
+# Pipelines documentation build configuration file, created by
+# sphinx-quickstart on Tue Dec 19 21:33:10 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -17,9 +23,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
-import sys
-sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- General configuration ------------------------------------------------
@@ -31,16 +35,19 @@ sys.path.insert(0, os.path.abspath('.'))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.imgmath',
+    'sphinx.ext.graphviz',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-#
-# source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -77,6 +84,12 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
+project = 'RM'
+project_description = 'RM Pipeline docs'
+
+copyright = '2018, Kimetrica llc'  # NOQA
+author = 'Kimetrica llc'
+
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -88,8 +101,9 @@ html_theme = 'default'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#
-# html_theme_options = {}
+html_theme_options = {
+    'description': project_description
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -107,10 +121,10 @@ html_sidebars = {
         'navigation.html',
         'relations.html',  # needs 'show_related': True theme option to display
         'searchbox.html',
-        'donate.html',
     ]
 }
 
+html_logo = '_static/logo.png'
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -168,5 +182,23 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
+# Global substituions
+rst_epilog = """
+.. |ProjectName| replace:: {project}
+""".format(
+    project=project,
+)
+
+def process_docstring(app, what, name, obj, options, lines):
+    lines.append('this is added on the end of each module')
+
+def setup(app):
+    app.add_config_value('recommonmark_config',
+                         {'auto_toc_tree_section': False,
+                          'graphviz_output_format': 'svg',
+                          },
+                         True)
+    app.add_transform(AutoStructify)
+    app.connect('autodoc-process-docstring', process_docstring)
 
 
