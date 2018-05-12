@@ -31,6 +31,8 @@ More stuff
     :undoc-members:
     :show-inheritance:
 
+.. include:: ../README.rst
+
 
 * The :ref:`genindex`, :ref:`modindex` or the :doc:`detailed table of contents <contents>`.
 
