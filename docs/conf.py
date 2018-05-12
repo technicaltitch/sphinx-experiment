@@ -188,8 +188,8 @@ rst_epilog = """
     project=project,
 )
 
-def process_docstring(app, what, name, obj, options, lines):
-    lines.extend(['this is added on the end of each module', ])
+# def process_docstring(app, what, name, obj, options, lines):
+#     lines.extend(['this is added on the end of each module', ])
 
 def setup(app):
     app.add_config_value('recommonmark_config',
@@ -198,6 +198,6 @@ def setup(app):
                           },
                          True)
     app.add_transform(AutoStructify)
-    app.connect('autodoc-process-docstring', process_docstring)
+    # app.connect('autodoc-process-docstring', process_docstring)
 
 
