@@ -189,7 +189,7 @@ rst_epilog = """
 )
 
 def process_docstring(app, what, name, obj, options, lines):
-    lines.append('this is added on the end of each module')
+    lines.extend(['this is added on the end of each module', ])
 
 def setup(app):
     app.add_config_value('recommonmark_config',
