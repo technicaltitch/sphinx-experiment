@@ -1,10 +1,7 @@
 import os
 
 import numpy as np
-from luigi import ExternalTask, Task, configuration
-
-from pipelines import ReadDataFrameTask
-from pipelines.targets import ExpiringMemoryTarget, LocalTarget
+from luigi import ExternalTask, Task, configuration, LocalTarget
 
 config = configuration.get_config()
 
@@ -18,7 +15,7 @@ class AllSectionsExternal(ExternalTask):
         return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
 
 
-class ReadAllSections(ReadDataFrameTask):
+class ReadAllSections():
 
     def requires(self):
         return AllSectionsExternal()
@@ -33,7 +30,7 @@ class ChrisCalcTask(Task):
         return ReadAllSections()
 
     def output(self):
-        return ExpiringMemoryTarget(name='xyz_calculated_data', timeout=10)
+        return object()
 
     def run(self):
         """
@@ -65,7 +62,7 @@ class ChrisAggWeighted(Task):
         return ChrisCalcTask()
 
     def output(self):
-        return ExpiringMemoryTarget(name='aggregated_weighted_data', timeout=10)
+        return None
 
     def run(self):
         """
@@ -83,7 +80,7 @@ class ChrisAggUnweighted(Task):
         return ChrisCalcTask()
 
     def output(self):
-        return ExpiringMemoryTarget(name='aggregated_unweighted_data', timeout=10)
+        return LocalTarget(name='aggregated_unweighted_data', timeout=10)
 
     def run(self):
         """
@@ -102,7 +99,7 @@ class AppendDataFrames(Task):
         return ChrisAggUnweighted(), ChrisAggWeighted()
 
     def output(self):
-        return ExpiringMemoryTarget(name='appended_data', timeout=10)
+        return LocalTarget(name='appended_data', timeout=10)
 
     def run(self):
         df_lev1 = self.input()[0].get()
@@ -126,7 +123,7 @@ class CalculateConfidenceIntervals(Task):
         return AppendDataFrames()
 
     def output(self):
-        return ExpiringMemoryTarget(name='data_confidence_intervals', timeout=10)
+        return LocalTarget(name='data_confidence_intervals', timeout=10)
 
     def run(self):
 
