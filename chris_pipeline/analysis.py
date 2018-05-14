@@ -15,7 +15,10 @@ class AllSectionsExternal(ExternalTask):
         """
         This is a *docstring* for the output method. It includes ``code`` inline and para:
 
-            return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
+            def output(self):
+                return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
+
+        Note that indenting doesn't seem to work for single line code sections.
 
         It includes a doctest section:
 
@@ -50,24 +53,36 @@ class AllSectionsExternal(ExternalTask):
 
         .. _footnote too: https://example.com/
 
-        Also, an academic reference [ref01]_
-
-        .. [ref01] Book or article reference, URL or whatever.
+        Also, a footnoted academic reference [ref01]_
 
         Some text replacement |to_replace|
 
         .. |to_replace| replace:: replacement *replaced*
 
-        An internal reference to :class:`ChrisAggWeighted`
+        An internal reference to our in-page :class:`ChrisAggWeighted` will convert into a hyperlink.
 
-        A highly dubious external reference to Luigi :class:`Task`
+        An external reference to Luigi :class:`Task` will **not** convert into a hyperlink.
+        You can use ``:class:``, ``:mod:`` and ``:func:`` similarly.
+
+        .. warning::
+
+            It also includes a warning.
+
+        .. versionadded:: 0.30
+
+        And a version comment.
 
         An image
 
         .. image:: _static/logo.*
-            :alt: Warning!
+            :alt: RM logo!
+            :align: center
+
+            Project logo at ``_static/logo.*``.
 
         :return: :class:`ChrisAggWeighted`
+
+        .. [ref01] https://www.example.com
         """
         return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
 
