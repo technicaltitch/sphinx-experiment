@@ -12,6 +12,63 @@ xyz_num_to_word = {}
 class AllSectionsExternal(ExternalTask):
 
     def output(self):
+        """
+        This is a *docstring* for the output method. It includes ``code`` inline and para:
+
+            return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
+
+        It includes a doctest section:
+
+        >>> 1 + 1
+        2
+
+        Some tables:
+
+        +------------------------+------------+----------+----------+
+        | Header row, column 1   | Header 2   | Header 3 | Header 4 |
+        | (header rows optional) |            |          |          |
+        +========================+============+==========+==========+
+        | body row 1, column 1   | column 2   | column 3 | column 4 |
+        +------------------------+------------+----------+----------+
+        | body row 2             | ...        | ...      |          |
+        +------------------------+------------+----------+----------+
+
+        Simpler:
+
+        =====  =====  =======
+        A      B      A and B
+        =====  =====  =======
+        False  False  False
+        True   False  False
+        False  True   False
+        True   True   True
+        =====  =====  =======
+
+        A `link <https://www.example.com/>`_
+
+        A `footnote too`_.
+
+        .. _footnote too: https://example.com/
+
+        Also, an academic reference [ref01]_
+
+        .. [ref01] Book or article reference, URL or whatever.
+
+        Some text replacement |to_replace|
+
+        .. |to_replace| replace:: replacement *replaced*
+
+        An internal reference to :class:`ChrisAggWeighted`
+
+        A highly dubious external reference to Luigi :class:`Task`
+
+        An image
+
+        .. image:: _static/logo.*
+            :alt: Warning!
+
+        :return: :class:`ChrisAggWeighted`
+        """
         return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
 
 
