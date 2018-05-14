@@ -6,6 +6,18 @@ import sys
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+
+from unittest.mock import MagicMock
+
+class Mock(MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+        return MagicMock()
+
+MOCK_MODULES = ['gdal', 'numpy', 'pandas']
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+
+
 # Pipelines documentation build configuration file, created by
 # sphinx-quickstart on Tue Dec 19 21:33:10 2017.
 #
