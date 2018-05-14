@@ -7,7 +7,6 @@ numexpr==2.6.4
 openpyxl==2.4.7
 psutil==5.4.3
 python-dateutil==2.6.0
-pytables==3.4.2
 requests==2.18.4
 seaborn==0.8.1
 xlrd==1.1.0
