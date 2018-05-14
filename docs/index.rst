@@ -12,6 +12,8 @@ Introduction
 
 .. rubric:: Everything you need to know about |ProjectName|.
 
+This is now tag 0.02
+
 This documentation explains how analysis is performed for $ProjectName.
 
 Additional assistance is available from the following sources:
