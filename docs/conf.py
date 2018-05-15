@@ -225,7 +225,9 @@ def process_docstring(app, what, name, obj, options, lines):
                  a [label="chris_pipeline.analysis.AppendDataFrames", href="chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
                  b [label="other"];
                  a -> b;
-             }""", ])
+             }
+
+""", ])
 
 def setup(app):
     app.add_config_value('recommonmark_config',
