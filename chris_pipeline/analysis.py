@@ -13,16 +13,18 @@ class AllSectionsExternal(ExternalTask):
 
     def output(self):
         """
-        This is a *docstring* for the output method. It includes ``code`` inline and para:
+        This is a *docstring* for the output method. It includes ``code`` inline, and as a block:
 
         .. code-block:: python
            :linenos:
            :emphasize-lines: 2,3
+           :caption: this.py
+           :name: this-py
 
             def output(self):
                 l = [1, 2, 3, ]
                 i = l + [4, 5, ]
-                # This is Python highlighted
+                # This should be Python highlighted and lines 2 and 3 emphasised - these don't seem to work. Hey ho.
                 return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
 
         It includes a doctest section. These can be automatically tested on each commit to test the
@@ -78,13 +80,10 @@ class AllSectionsExternal(ExternalTask):
 
         And a version comment.
 
-        An image
+        An image:
 
         .. image:: _static/logo.*
             :alt: RM logo!
-            :align: center
-
-            Project logo at ``_static/logo.*``.
 
         Inline maths: :math:`a^2 + b^2 = c^2`.
 
