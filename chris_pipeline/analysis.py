@@ -93,8 +93,11 @@ class AllSectionsExternal(ExternalTask):
            :label: euler
 
         Euler's identity, equation :eq:`euler`, was elected one of the most
-        beautiful mathematical formulas. Unfortunately the linking for cross referencing
-        doesn't currently render right on the linked to page.
+        beautiful mathematical formulas. Unfortunately the linked to equation
+        is much *less* beautiful when a ``:label:`` is specified, so don't label
+        equations until readthedocs fixes this. Incidentally, lines won't be broken
+        unless you
+        | start the next line with a pipe (``|``) character.
 
         :return: :class:`ChrisAggWeighted`
 
