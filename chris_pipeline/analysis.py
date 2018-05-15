@@ -15,8 +15,10 @@ class AllSectionsExternal(ExternalTask):
         """
         This is a *docstring* for the output method. It includes ``code`` inline and para:
 
+        ```
             def output(self):
                 return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
+        ```
 
         Note that indenting doesn't seem to work for single line code sections.
 
