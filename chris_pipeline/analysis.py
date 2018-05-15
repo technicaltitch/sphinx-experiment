@@ -15,14 +15,18 @@ class AllSectionsExternal(ExternalTask):
         """
         This is a *docstring* for the output method. It includes ``code`` inline and para:
 
-        ```
+        .. code-block:: python
+           :linenos:
+           :emphasize-lines: 2,3
+
             def output(self):
+                l = [1, 2, 3, ]
+                i = l + [4, 5, ]
+                # This is Python highlighted
                 return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
-        ```
 
-        Note that indenting doesn't seem to work for single line code sections.
-
-        It includes a doctest section:
+        It includes a doctest section. These can be automatically tested on each commit to test the
+        documentation is up to date.
 
         >>> 1 + 1
         2
@@ -90,7 +94,8 @@ class AllSectionsExternal(ExternalTask):
            :label: euler
 
         Euler's identity, equation :eq:`euler`, was elected one of the most
-        beautiful mathematical formulas.
+        beautiful mathematical formulas. Unfortunately the linking for cross referencing
+        doesn't currently render right on the linked to page.
 
         :return: :class:`ChrisAggWeighted`
 
