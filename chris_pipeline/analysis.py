@@ -97,6 +97,14 @@ class AllSectionsExternal(ExternalTask):
         is much *less* beautiful when a ``:label:`` is specified, so don't label
         equations until readthedocs fixes this.
 
+        .. graphviz::
+
+             digraph example {
+                 a [label="chris_pipeline.analysis.AppendDataFrames", href="chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
+                 b [label="other"];
+                 a -> b;
+             }
+
         :return: :class:`ChrisAggWeighted`
 
         .. [ref01] https://www.example.com
