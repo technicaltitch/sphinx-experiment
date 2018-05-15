@@ -95,9 +95,7 @@ class AllSectionsExternal(ExternalTask):
         Euler's identity, equation :eq:`euler`, was elected one of the most
         beautiful mathematical formulas. Unfortunately the linked to equation
         is much *less* beautiful when a ``:label:`` is specified, so don't label
-        equations until readthedocs fixes this. Incidentally, lines won't be broken
-        unless you
-        | start the next line with a pipe (``|``) character.
+        equations until readthedocs fixes this.
 
         :return: :class:`ChrisAggWeighted`
 
@@ -134,7 +132,63 @@ class ChrisCalcTask(Task):
 
     def func_xyz(self, temp_df, xyz_q_list):
         """
-        Translates and sums over proper values to calculate XYZ number score.
+        We could use standard RST docstrings:
+
+            :param temp_df: The survey response DataFrame
+            :type temp_df: DataFrame
+            :param xyz_q_list: The :class:`list` of questions for xyz
+            :type xyz_q_list: list
+            :returns: A list of processed answers
+            :rtype: list
+
+        Or the Google style - more readable and rendered with the Sphinx napoleon plugin:
+
+        Args:
+            temp_df (DataFrame): The survey response DataFrame
+            xyz_q_list (list): The :class:`list` of questions for xyz
+
+        Returns:
+            list: A :class:`list` of processed answers
+
+        Or the Numpy style - more readable when we've lots of parameters:
+
+        Parameters
+        ----------
+        temp_df : DataFrame
+            The survey response ::class::`DataFrame`
+        xyz_q_list : list
+            The :class:`list` of questions for xyz
+
+        Returns
+        -------
+        list
+            The :class:`list` of processed answers
+
+        Possible section headers:
+
+            * ``Args`` (alias of Parameters)
+            * ``Arguments`` (alias of Parameters)
+            * ``Attributes``
+            * ``Example``
+            * ``Examples``
+            * ``Keyword Args`` (alias of Keyword Arguments)
+            * ``Keyword Arguments``
+            * ``Methods``
+            * ``Note``
+            * ``Notes``
+            * ``Other Parameters``
+            * ``Parameters``
+            * ``Return`` (alias of Returns)
+            * ``Returns``
+            * ``Raises``
+            * ``References``
+            * ``See Also``
+            * ``Todo``
+            * ``Warning``
+            * ``Warnings`` (alias of Warning)
+            * ``Warns``
+            * ``Yield`` (alias of Yields)
+            * ``Yields``
         """
         for q in xyz_q_list:
             temp_df = temp_df.replace({q: {2: 1}})

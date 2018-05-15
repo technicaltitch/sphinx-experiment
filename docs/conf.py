@@ -53,6 +53,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.imgmath',
     'sphinx.ext.graphviz',
+    'sphinx.ext.napoleon',  # only needed if we go for Google or Numpy docstring formats
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -183,6 +184,18 @@ man_pages = [
      [author], 1)
 ]
 
+# Napoleon settings (all their default settings at the moment)
+napoleon_google_docstring = True
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = False
+napoleon_include_special_with_doc = True
+napoleon_use_admonition_for_examples = False
+napoleon_use_admonition_for_notes = False
+napoleon_use_admonition_for_references = False
+napoleon_use_ivar = False
+napoleon_use_param = True
+napoleon_use_rtype = True
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -203,7 +216,16 @@ rst_epilog = """
 )
 
 def process_docstring(app, what, name, obj, options, lines):
-    lines.extend(['this is added on the end of each module', ])
+    lines.extend(["""
+        Quick check to confirm napoleon is compatible with graphviz:
+
+        .. graphviz::
+
+             digraph example {
+                 a [label="chris_pipeline.analysis.AppendDataFrames", href="chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
+                 b [label="other"];
+                 a -> b;
+             }""", ])
 
 def setup(app):
     app.add_config_value('recommonmark_config',
