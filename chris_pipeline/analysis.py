@@ -108,9 +108,9 @@ class AllSectionsExternal(ExternalTask):
         There are more complex directives
         `documented here. <https://docutils.readthedocs.io/en/sphinx-docs/ref/rst/directives.html>`_
 
-        For example:
+        For example the inheritance diagram for ChrisAggWeighted:
 
-        .. inheritance-diagram: ChrisAggWeighted
+        .. inheritance-diagram: chris_pipeline.ChrisAggWeighted
 
         :return: :class:`ChrisAggWeighted`
 
