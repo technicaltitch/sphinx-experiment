@@ -112,6 +112,10 @@ class AllSectionsExternal(ExternalTask):
 
         .. inheritance-diagram:: chris_pipeline.analysis.ChrisAggWeighted
 
+        For example the pipeline DAG diagram for ChrisAggWeighted:
+
+        .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted
+
         :return: :class:`ChrisAggWeighted`
 
         .. [ref01] https://www.example.com

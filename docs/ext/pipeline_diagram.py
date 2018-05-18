@@ -39,6 +39,7 @@ import sys
 import inspect
 from hashlib import md5
 
+import networkx as nx
 from six import text_type
 from six.moves import builtins
 
@@ -50,6 +51,8 @@ from sphinx.ext.graphviz import render_dot_html, render_dot_latex, \
     render_dot_texinfo, figure_wrapper
 from sphinx.pycode import ModuleAnalyzer
 from sphinx.util import force_decode
+
+from pipelines.utils import get_dag
 
 if False:
     # For type annotation
@@ -99,9 +102,9 @@ def import_classes(name, currmodule):
         target = try_import(name)
 
     if target is None:
-        raise InheritanceException(
+        raise PipelineException(
             'Could not import class or module %r specified for '
-            'inheritance diagram' % name)
+            'pipeline diagram' % name)
 
     if inspect.isclass(target):
         # If imported object is a class, just return it
@@ -113,15 +116,15 @@ def import_classes(name, currmodule):
             if inspect.isclass(cls) and cls.__module__ == target.__name__:
                 classes.append(cls)
         return classes
-    raise InheritanceException('%r specified for inheritance diagram is '
+    raise PipelineException('%r specified for pipeline diagram is '
                                'not a class or module' % name)
 
 
-class InheritanceException(Exception):
+class PipelineException(Exception):
     pass
 
 
-class InheritanceGraph(object):
+class PipelineGraph(object):
     """
     Given a list of classes, determines the set of classes that they inherit
     from all the way to the root "object", and then is able to generate a
@@ -136,12 +139,12 @@ class InheritanceGraph(object):
         in the graph.
         """
         self.class_names = class_names
-        classes = self._import_classes(class_names, currmodule)
-        self.class_info = self._class_info(classes, show_builtins,
+        self.classes = self._import_classes(class_names, currmodule)
+        self.class_info = self._class_info(self.classes, show_builtins,
                                            private_bases, parts)
         if not self.class_info:
-            raise InheritanceException('No classes found for '
-                                       'inheritance diagram')
+            raise PipelineException('No classes found for '
+                                       'pipeline diagram')
 
     def _import_classes(self, class_names, currmodule):
         # type: (unicode, str) -> List[Any]
@@ -269,9 +272,9 @@ class InheritanceGraph(object):
         n_attrs.update(node_attrs)
         e_attrs.update(edge_attrs)
         if env:
-            g_attrs.update(env.config.inheritance_graph_attrs)
-            n_attrs.update(env.config.inheritance_node_attrs)
-            e_attrs.update(env.config.inheritance_edge_attrs)
+            g_attrs.update(env.config.pipeline_graph_attrs)
+            n_attrs.update(env.config.pipeline_node_attrs)
+            e_attrs.update(env.config.pipeline_edge_attrs)
 
         res = []  # type: List[unicode]
         res.append('digraph %s {\n' % name)
@@ -294,19 +297,25 @@ class InheritanceGraph(object):
                            (base_name, name,
                             self._format_node_attrs(e_attrs)))
         res.append('}\n')
-        return ''.join(res)
+        dag_G = get_dag(self.classes[0])
+        assert isinstance(dag_G, nx.MultiDiGraph)
+        AGraph = nx.nx_agraph.to_agraph(dag_G)
+        # AGraph uses pygraphviz, which seems to be the most flexible in terms of formatting
+        # and richer dot expressions, to be confirmed.
+        dot = AGraph.string()
+        return dot
 
 
-class inheritance_diagram(nodes.General, nodes.Element):
+class pipeline_diagram(nodes.General, nodes.Element):
     """
-    A docutils node to use as a placeholder for the inheritance diagram.
+    A docutils node to use as a placeholder for the pipeline diagram.
     """
     pass
 
 
-class InheritanceDiagram(Directive):
+class PipelineDiagram(Directive):
     """
-    Run when the inheritance_diagram directive is first encountered.
+    Run when the pipeline_diagram directive is first encountered.
     """
     has_content = False
     required_arguments = 1
@@ -320,7 +329,7 @@ class InheritanceDiagram(Directive):
 
     def run(self):
         # type: () -> List[nodes.Node]
-        node = inheritance_diagram()
+        node = pipeline_diagram()
         node.document = self.state.document
         env = self.state.document.settings.env
         class_names = self.arguments[0].split()
@@ -331,11 +340,11 @@ class InheritanceDiagram(Directive):
 
         # Create a graph starting with the list of classes
         try:
-            graph = InheritanceGraph(
+            graph = PipelineGraph(
                 class_names, env.ref_context.get('py:module'),
                 parts=node['parts'],
                 private_bases='private-bases' in self.options)
-        except InheritanceException as err:
+        except PipelineException as err:
             return [node.document.reporter.warning(err.args[0],
                                                    line=self.lineno)]
 
@@ -359,13 +368,13 @@ class InheritanceDiagram(Directive):
 
 
 def get_graph_hash(node):
-    # type: (inheritance_diagram) -> unicode
+    # type: (pipeline_diagram) -> unicode
     encoded = (node['content'] + str(node['parts'])).encode('utf-8')
     return md5(encoded).hexdigest()[-10:]
 
 
-def html_visit_inheritance_diagram(self, node):
-    # type: (nodes.NodeVisitor, inheritance_diagram) -> None
+def html_visit_pipeline_diagram(self, node):
+    # type: (nodes.NodeVisitor, pipeline_diagram) -> None
     """
     Output the graph for HTML.  This will insert a PNG with clickable
     image map.
@@ -373,7 +382,7 @@ def html_visit_inheritance_diagram(self, node):
     graph = node['graph']
 
     graph_hash = get_graph_hash(node)
-    name = 'inheritance%s' % graph_hash
+    name = 'pipeline%s' % graph_hash
 
     # Create a mapping from fully-qualified class names to URLs.
     graphviz_output_format = self.builder.env.config.graphviz_output_format.upper()
@@ -392,45 +401,45 @@ def html_visit_inheritance_diagram(self, node):
                 urls[child['reftitle']] = '#' + child.get('refid')
 
     dotcode = graph.generate_dot(name, urls, env=self.builder.env)
-    render_dot_html(self, node, dotcode, {}, 'inheritance', 'inheritance',
-                    alt='Inheritance diagram of ' + node['content'])
+    render_dot_html(self, node, dotcode, {}, 'pipeline', 'pipeline',
+                    alt='Pipeline diagram of ' + node['content'])
     raise nodes.SkipNode
 
 
-def latex_visit_inheritance_diagram(self, node):
-    # type: (nodes.NodeVisitor, inheritance_diagram) -> None
+def latex_visit_pipeline_diagram(self, node):
+    # type: (nodes.NodeVisitor, pipeline_diagram) -> None
     """
     Output the graph for LaTeX.  This will insert a PDF.
     """
     graph = node['graph']
 
     graph_hash = get_graph_hash(node)
-    name = 'inheritance%s' % graph_hash
+    name = 'pipeline%s' % graph_hash
 
     dotcode = graph.generate_dot(name, env=self.builder.env,
                                  graph_attrs={'size': '"6.0,6.0"'})
-    render_dot_latex(self, node, dotcode, {}, 'inheritance')
+    render_dot_latex(self, node, dotcode, {}, 'pipeline')
     raise nodes.SkipNode
 
 
-def texinfo_visit_inheritance_diagram(self, node):
-    # type: (nodes.NodeVisitor, inheritance_diagram) -> None
+def texinfo_visit_pipeline_diagram(self, node):
+    # type: (nodes.NodeVisitor, pipeline_diagram) -> None
     """
     Output the graph for Texinfo.  This will insert a PNG.
     """
     graph = node['graph']
 
     graph_hash = get_graph_hash(node)
-    name = 'inheritance%s' % graph_hash
+    name = 'pipeline%s' % graph_hash
 
     dotcode = graph.generate_dot(name, env=self.builder.env,
                                  graph_attrs={'size': '"6.0,6.0"'})
-    render_dot_texinfo(self, node, dotcode, {}, 'inheritance')
+    render_dot_texinfo(self, node, dotcode, {}, 'pipeline')
     raise nodes.SkipNode
 
 
 def skip(self, node):
-    # type: (nodes.NodeVisitor, inheritance_diagram) -> None
+    # type: (nodes.NodeVisitor, pipeline_diagram) -> None
     raise nodes.SkipNode
 
 
@@ -438,14 +447,14 @@ def setup(app):
     # type: (Sphinx) -> Dict[unicode, Any]
     app.setup_extension('sphinx.ext.graphviz')
     app.add_node(
-        inheritance_diagram,
-        latex=(latex_visit_inheritance_diagram, None),
-        html=(html_visit_inheritance_diagram, None),
+        pipeline_diagram,
+        latex=(latex_visit_pipeline_diagram, None),
+        html=(html_visit_pipeline_diagram, None),
         text=(skip, None),
         man=(skip, None),
-        texinfo=(texinfo_visit_inheritance_diagram, None))
-    app.add_directive('inheritance-diagram', InheritanceDiagram)
-    app.add_config_value('inheritance_graph_attrs', {}, False)
-    app.add_config_value('inheritance_node_attrs', {}, False)
-    app.add_config_value('inheritance_edge_attrs', {}, False)
+        texinfo=(texinfo_visit_pipeline_diagram, None))
+    app.add_directive('pipeline-diagram', PipelineDiagram)
+    app.add_config_value('pipeline_graph_attrs', {}, False)
+    app.add_config_value('pipeline_node_attrs', {}, False)
+    app.add_config_value('pipeline_edge_attrs', {}, False)
     return {'version': sphinx.__display_version__, 'parallel_read_safe': True}
