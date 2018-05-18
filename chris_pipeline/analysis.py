@@ -108,6 +108,10 @@ class AllSectionsExternal(ExternalTask):
         There are more complex directives
         `documented here. <https://docutils.readthedocs.io/en/sphinx-docs/ref/rst/directives.html>`_
 
+        For example:
+
+        .. inheritance-diagram: ChrisAggWeighted
+
         :return: :class:`ChrisAggWeighted`
 
         .. [ref01] https://www.example.com
