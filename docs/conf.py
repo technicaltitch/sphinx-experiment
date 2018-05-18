@@ -51,7 +51,8 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.imgmath',
     'sphinx.ext.graphviz',
-    'sphinx.ext.inheritance_diagram',
+    # 'sphinx.ext.inheritance_diagram',
+    'ext.pipeline_diagram',
     'sphinx.ext.napoleon',  # only needed if we go for Google or Numpy docstring formats
 ]
 
