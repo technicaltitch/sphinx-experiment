@@ -105,6 +105,9 @@ class AllSectionsExternal(ExternalTask):
                  a -> b;
              }
 
+        There are more complex directives
+        `documented here. <https://docutils.readthedocs.io/en/sphinx-docs/ref/rst/directives.html>`_
+
         :return: :class:`ChrisAggWeighted`
 
         .. [ref01] https://www.example.com
