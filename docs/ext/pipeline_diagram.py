@@ -17,7 +17,7 @@ r"""
        class D: def requires(self): return B, C
        class E: def requires(self): return B
 
-       .. pipeline-diagram: D
+       .. pipeline-diagram:: mod.D
 
        Produces a graph like the following:
 
