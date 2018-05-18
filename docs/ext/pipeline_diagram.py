@@ -297,7 +297,7 @@ class PipelineGraph(object):
                            (base_name, name,
                             self._format_node_attrs(e_attrs)))
         res.append('}\n')
-        dag_G = get_dag(self.classes[0])
+        dag_G = get_dag(self.classes[0]())
         assert isinstance(dag_G, nx.MultiDiGraph)
         AGraph = nx.nx_agraph.to_agraph(dag_G)
         # AGraph uses pygraphviz, which seems to be the most flexible in terms of formatting
