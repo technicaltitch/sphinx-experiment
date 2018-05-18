@@ -110,7 +110,7 @@ class AllSectionsExternal(ExternalTask):
 
         For example the inheritance diagram for ChrisAggWeighted:
 
-        .. inheritance-diagram: chris_pipeline.ChrisAggWeighted
+        .. inheritance-diagram:: chris_pipeline.ChrisAggWeighted
 
         :return: :class:`ChrisAggWeighted`
 
