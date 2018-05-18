@@ -1,4 +1,4 @@
 [submodule "pipelines"]
 	path = pipelines
-	url = git@github.com:technicaltitch/pipelines.git
+	url = https://gitlab.kimetrica.com/data-lab/pipelines.git
 	branch = task/8862-add-self-doc
