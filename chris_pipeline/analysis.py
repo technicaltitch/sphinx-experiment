@@ -118,7 +118,7 @@ class AllSectionsExternal(ExternalTask):
 
         Pipeline DAG diagram directive can accept multiple endpoint tasks:
 
-        .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted chris_pipeline.analysis.ChrisAggUnWeighted
+        .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted chris_pipeline.analysis.ChrisAggUnweighted
 
         :return: :class:`ChrisAggWeighted`
 
