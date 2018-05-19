@@ -208,7 +208,7 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-autodoc_inherit_docstrings = False
+# Breaks diagram generation: autodoc_inherit_docstrings = False
 
 # Global substituions
 rst_epilog = """
