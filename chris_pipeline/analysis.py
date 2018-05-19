@@ -112,9 +112,13 @@ class AllSectionsExternal(ExternalTask):
 
         .. inheritance-diagram:: chris_pipeline.analysis.ChrisAggWeighted
 
-        For example the pipeline DAG diagram for ChrisAggWeighted:
+        The pipeline DAG diagram for ChrisAggWeighted:
 
         .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted
+
+        Pipeline DAG diagram directive can accept multiple endpoint tasks:
+
+        .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted chris_pipeline.analysis.ChrisAggUnWeighted
 
         :return: :class:`ChrisAggWeighted`
 
