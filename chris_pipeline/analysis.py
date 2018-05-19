@@ -112,11 +112,11 @@ class AllSectionsExternal(ExternalTask):
 
         .. inheritance-diagram:: chris_pipeline.analysis.ChrisAggWeighted
 
-        The pipeline DAG diagram for ChrisAggWeighted:
+        The pipeline DAG diagram for CalculateConfidenceIntervals:
 
-        .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted
+        .. pipeline-diagram:: chris_pipeline.analysis.CalculateConfidenceIntervals
 
-        Pipeline DAG diagram directive can accept multiple endpoint tasks:
+        The pipeline diagram directive can merge multiple endpoint task DAGs:
 
         .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted chris_pipeline.analysis.ChrisAggUnweighted
 
