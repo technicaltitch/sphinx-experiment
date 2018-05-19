@@ -13,7 +13,14 @@ class AllSectionsExternal(ExternalTask):
 
     def output(self):
         """
-        This is a *docstring* for the output method. It includes ``code`` inline, and as a block:
+        This is a *docstring* for the output method. It contains examples of some of the syntax made available by
+        the Sphinx RST language.
+
+        Analysts will maintain RST files documenting the pipeline, using Sphinx ``directives`` to generate diagrams.
+
+        The source of the below demonstrates some of the syntax.
+
+        It includes ``code`` inline, and as a block:
 
         .. code-block:: python
            :linenos:
@@ -92,27 +99,19 @@ class AllSectionsExternal(ExternalTask):
         .. math:: e^{i\pi} + 1 = 0
            :label: euler
 
-        Euler's identity, equation :eq:`euler`, was elected one of the most
-        beautiful mathematical formulas. Unfortunately the linked to equation
-        is much *less* beautiful when a ``:label:`` is specified, so don't label
-        equations until readthedocs fixes this.
+        Euler's identity, equation :eq:`euler`.
 
-        .. graphviz::
-
-             digraph example {
-                 a [label="chris_pipeline.analysis.AppendDataFrames", href="chris_pipeline.html#chris_pipeline.analysis.AppendDataFrames", target="_blank"];
-                 b [label="other"];
-                 a -> b;
-             }
+        Nb. When a ``:label:`` is specified readthedocs currently renders oddly on the autodoc list,
+        so don't label equations until readthedocs fixes this.
 
         There are more complex directives
         `documented here. <https://docutils.readthedocs.io/en/sphinx-docs/ref/rst/directives.html>`_
 
-        For example the inheritance diagram for ChrisAggWeighted:
+        There is an inheritance diagram directive, here run on :class:`ChrisAggWeighted`:
 
         .. inheritance-diagram:: chris_pipeline.analysis.ChrisAggWeighted
 
-        The pipeline DAG diagram for CalculateConfidenceIntervals:
+        This is what the pipeline DAG diagram produces for :class:`CalculateConfidenceIntervals`:
 
         .. pipeline-diagram:: chris_pipeline.analysis.CalculateConfidenceIntervals
 
@@ -120,7 +119,11 @@ class AllSectionsExternal(ExternalTask):
 
         .. pipeline-diagram:: chris_pipeline.analysis.ChrisAggWeighted chris_pipeline.analysis.ChrisAggUnweighted
 
+        Standard method signature documentation.
+
         :return: :class:`ChrisAggWeighted`
+
+        See :func:`func_xyz` docstring for the Google and Numpy alternatives.
 
         .. [ref01] https://www.example.com
         """
@@ -145,9 +148,7 @@ class ChrisCalcTask(Task):
         return object()
 
     def run(self):
-        """
-        Calculate the things. Return dataframe with data inside. docstring for a method
-        """
+
         data_dict = self.input().get()['clean_data']
         df = data_dict['xyz'].copy()
 
