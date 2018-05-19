@@ -123,7 +123,7 @@ class AllSectionsExternal(ExternalTask):
         return [LocalTarget(os.path.join(config.get("paths", "quarterly_data_path"), "Section_6__Household.csv"))]
 
 
-class ReadAllSections():
+class ReadAllSections(Task):
 
     def requires(self):
         return AllSectionsExternal()
